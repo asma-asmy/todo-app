@@ -1,4 +1,4 @@
-## 📋 Todo App — Full Stack Spec
+## 📋 Todo App
 
 ---
 

@@ -1,4 +1,5 @@
-## 📋 Todo App
+
+## 📋 Todo App — Full Stack Spec
 
 ---
 
@@ -21,12 +22,12 @@ A full-stack task management app where users can register, log in, and manage pe
 
 ### 👤 User Stories
 
-*Auth*
+**Auth**
 - As a user, I can register with email & password
 - As a user, I can log in and receive a JWT token
 - As a user, I can log out
 
-*Todos*
+**Todos**
 - As a user, I can create a todo with title, description, due date, priority, and category
 - As a user, I can view all my todos
 - As a user, I can mark a todo as complete/incomplete
@@ -39,17 +40,17 @@ A full-stack task management app where users can register, log in, and manage pe
 
 ### 🗄️ Database Schema
 
-*users*
-
+**users**
+```
 id          UUID PRIMARY KEY
 email       VARCHAR UNIQUE NOT NULL
 password    VARCHAR NOT NULL
 name        VARCHAR
 created_at  TIMESTAMP
+```
 
-
-*todos*
-
+**todos**
+```
 id            UUID PRIMARY KEY
 user_id       UUID REFERENCES users(id)
 title         VARCHAR NOT NULL
@@ -60,51 +61,51 @@ due_date      DATE
 category      VARCHAR
 created_at    TIMESTAMP
 updated_at    TIMESTAMP
-
+```
 
 ---
 
 ### 🔌 API Endpoints
 
-*Auth Routes*
-
+**Auth Routes**
+```
 POST   /api/auth/register     → Register user
 POST   /api/auth/login        → Login, returns JWT
 POST   /api/auth/logout       → Invalidate session
 GET    /api/auth/me           → Get current user
+```
 
-
-*Todo Routes* (all protected by JWT middleware)
-
+**Todo Routes** *(all protected by JWT middleware)*
+```
 GET    /api/todos             → Get all todos (with filters)
 POST   /api/todos             → Create a todo
 GET    /api/todos/:id         → Get single todo
 PUT    /api/todos/:id         → Update todo
 DELETE /api/todos/:id         → Delete todo
 PATCH  /api/todos/:id/toggle  → Toggle complete status
+```
 
-
-*Query Params for GET /api/todos*
-
+**Query Params for GET /api/todos**
+```
 ?status=complete|incomplete
 ?priority=low|medium|high
 ?category=work|personal|...
 ?search=keyword
 ?sortBy=due_date|created_at|priority
-
+```
 
 ---
 
 ### 🖥️ Frontend Pages & Components
 
-*Pages*
-- / — Landing/marketing page
-- /login — Login form
-- /register — Register form
-- /dashboard — Main todo view
+**Pages**
+- `/` — Landing/marketing page
+- `/login` — Login form
+- `/register` — Register form
+- `/dashboard` — Main todo view
 
-*Key Components*
-
+**Key Components**
+```
 <Navbar />              → Logo, user info, logout
 <TodoList />            → Renders list of TodoCard
 <TodoCard />            → Shows title, priority badge, due date, toggle, edit/delete
@@ -113,18 +114,18 @@ PATCH  /api/todos/:id/toggle  → Toggle complete status
 <SearchBar />           → Live search input
 <EmptyState />          → Shown when no todos match
 <PriorityBadge />       → Color-coded low/medium/high
-
+```
 
 ---
 
 ### 🔐 Auth Flow
 
-
+```
 Register → hash password (bcrypt) → save user → return JWT
 Login    → verify password        → return JWT
 Request  → JWT in Authorization header (Bearer token)
          → middleware validates JWT → attaches user to req
-
+```
 
 ---
 
@@ -142,17 +143,17 @@ Request  → JWT in Authorization header (Bearer token)
 
 ### 🚀 Feature Roadmap
 
-*Phase 1 — MVP*
+**Phase 1 — MVP**
 - Auth (register/login)
 - Basic CRUD for todos
 - Mark complete/incomplete
 
-*Phase 2 — Enhanced*
+**Phase 2 — Enhanced**
 - Filtering & search
 - Priority & categories
 - Due date with overdue highlighting
 
-*Phase 3 — Polish*
+**Phase 3 — Polish**
 - Drag-and-drop reordering
 - Dark mode
 - Email reminders for due todos
@@ -162,7 +163,7 @@ Request  → JWT in Authorization header (Bearer token)
 
 ### 📁 Folder Structure
 
-
+```
 /client
   /src
     /components
@@ -176,6 +177,4 @@ Request  → JWT in Authorization header (Bearer token)
   /middleware
   /models
   /db          ← DB connection + migrations
-
-
----
+```
